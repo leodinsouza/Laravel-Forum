@@ -6,8 +6,9 @@ use App\Models\Question;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -32,5 +33,19 @@ class User extends Authenticatable
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    /** 
+    * Pega o identificador que será armazenado na reivindicação do jwt
+    * @return mixed
+    */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
