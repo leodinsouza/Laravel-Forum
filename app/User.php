@@ -36,9 +36,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /** 
-    * Pega o identificador que será armazenado na reivindicação do jwt
-    * @return mixed
-    */
+     * Pega o identificador que será armazenado na reivindicação do jwt
+     * @return mixed
+     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -47,5 +47,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }
